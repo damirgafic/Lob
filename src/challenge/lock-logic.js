@@ -1,3 +1,4 @@
+// Damir Gafic
 const redirect = window.redirect
 
 const SECRET_COMBO = [1, 3, 5, 1]
@@ -7,7 +8,14 @@ const lockState = window.mobx.observable({
   wheels: [0, 0, 0, 0]
 })
 
-function changeDialValue (index, incrementBy) {
+function changeDialValue(index, incrementBy) {
+
+  lockState.wheels[index] += incrementBy;
+  if (arrayEquals(lockState.wheels, SECRET_COMBO)) {
+    lockState.locked = false;
+    redirect('damir');
+  }
+
   // This part is missing some code
   // This function is automatically called when the user clicks on a chevron
   // it will be called with a wheel index and an amount to change the value by
@@ -25,6 +33,10 @@ function changeDialValue (index, incrementBy) {
   // call the redirect() function with your name
   // eg: redirect('larry-lobster')
   // the redirect function will only redirect if the lockState is unlocked
+}
+
+function arrayEquals(a1, a2) {
+  return JSON.stringify(a1) == JSON.stringify(a2);
 }
 
 // let our other modules find our functions
